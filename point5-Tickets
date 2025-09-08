@@ -1,0 +1,100 @@
+function seleccionarBoleta() {
+    let opcion = "";
+    const opciones = ["1", "2", "3", "4"];
+    let valido = false;
+
+    do {
+        opcion = prompt(
+            "Seleccione tipo de boleta:\n" +
+            "1 - General ($20)\n" +
+            "2 - VIP ($50)\n" +
+            "3 - Platinum ($100)\n" +
+            "4 - Niño ($10)"
+        );
+
+        let a = 0;
+        while (a < opciones.length) {
+            if (opciones[a] != opcion) {
+                a = a + 1;
+            } else {
+                valido = true;
+                break;
+            }
+        }
+    } while (!valido);
+
+    return Number(opcion);
+}
+
+function obtenerDetalles(opcion) {
+    switch (opcion) {
+        case 1:
+            return {
+                tipo: "General",
+                precio: 20,
+                beneficios: "Acceso a zona comun y actividades generales."
+            };
+        case 2:
+            return {
+                tipo: "VIP",
+                precio: 50,
+                beneficios: "Zona preferencial, bebidas incluidas y acceso prioritario."
+            };
+        case 3:
+            return {
+                tipo: "Platinum",
+                precio: 100,
+                beneficios: "Zona exclusiva, catering premium y regalo especial."
+            };
+        case 4:
+            return {
+                tipo: "Niño",
+                precio: 10,
+                beneficios: "Acceso a zona infantil y actividades recreativas."
+            };
+        default:
+            return {
+                tipo: "Desconocido",
+                precio: 0,
+                beneficios: "No disponible."
+            };
+    }
+}
+
+function mostrarResumen(detalles) {
+    let mensaje = "=== BOLETA SELECCIONADA ===\n";
+    mensaje += "Tipo: " + detalles.tipo + "\n";
+    mensaje += "Precio: $" + detalles.precio + "\n";
+    mensaje += "Beneficios: " + detalles.beneficios;
+    alert(mensaje);
+}
+
+function sistemaBoletas() {
+    let continuar = "s";
+
+    do {
+        let seleccion = seleccionarBoleta();
+        let detalles = obtenerDetalles(seleccion);
+        mostrarResumen(detalles);
+
+        let respuesta = "";
+        const opciones = ["s", "n"];
+        let valido = false;
+
+        do {
+            respuesta = prompt("¿Deseas seleccionar otra boleta? (s/n):").toLowerCase();
+            let a = 0;
+            while (a < opciones.length) {
+                if (opciones[a] != respuesta) {
+                    a = a + 1;
+                } else {
+                    valido = true;
+                    break;
+                }
+            }
+        } while (!valido);
+
+        continuar = respuesta;
+    } while (continuar != "n");
+}
+sistemaBoletas();
